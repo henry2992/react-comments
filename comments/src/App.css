@@ -1,3 +1,8 @@
+body {
+  min-height: 100%;
+  background-color: #f1f2f7 !important;
+}
+
 .App {
   text-align: center;
 }
@@ -16,6 +21,18 @@
 
 .App-intro {
   font-size: large;
+}
+
+.post-holder{
+  background-color: #fff;
+  padding: 10px;
+  margin: 10px 0;
+}
+.author-holder{
+  text-align: right;
+}
+.right {
+  text-align: right;
 }
 
 @keyframes App-logo-spin {
