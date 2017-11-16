@@ -77,6 +77,8 @@ class NewPostsForm extends Component {
       option_values = null
     }
 
+    console.log(this.state)
+
     return (
       <div className="row">
         <div className="col-md-12">

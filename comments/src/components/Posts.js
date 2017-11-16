@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import './../App.css';
 import { Route, Link, withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getAllPosts, getCategories, sortBy, votePost } from './../actions'
-
+import { getAllPosts, getCategories, sortBy, votePost, deletePost, getComments } from './../actions'
+import Post from './Post'
 
 class Posts extends Component {
 
@@ -16,22 +16,10 @@ class Posts extends Component {
     this.props.getCategories();
   }
 
-  handleChange = event => {
+    handleChange = event => {
     const target = event.target;
     const value = target.value;
     this.props.sortBy(value)
-  }
-
-  voteUp(id) {
-    const option = 'upVote'
-    this.props.votePost(id, { option })
-    this.props.getAllPosts();
-  }
-
-  voteDown(id) {
-    const option = 'downVote'
-    this.props.votePost(id, { option })
-    this.props.getAllPosts();
   }
 
   render() {
@@ -40,37 +28,7 @@ class Posts extends Component {
     if(posts !== undefined) {
       post_component = 
         (posts).map((post) => (
-          <div className="row" key={post.id}>
-            <div className="col-md-12">
-              <div className="post-holder">
-                <h3>{post.title}</h3>
-                <p>{post.body}</p>
-                <div className="author-holder">
-                  <p>Author: {post.author}</p>
-                  <p>Category: {post.category}</p>
-                  <p>Posted on: {new Date(post.timestamp).toLocaleString()}</p>
-                  <p>Votes: {post.voteScore} </p>
-                  <button
-                    className='btn btn'
-                    onClick={() => this.voteUp(post.id)}
-                  >
-                    Vote Up
-                  </button>
-                  <button
-                    className='btn btn'
-                    onClick={() => this.voteDown(post.id)}
-                  >
-                    Vote Down
-                  </button>
-                </div>
-
-                <Link 
-                  to={`/post/${post.id}`}>
-                  Details
-                </Link>
-              </div>
-            </div>
-          </div>
+          <Post post_object={post} />
         ))
     } else {
       post_component = 'Loading'
@@ -97,7 +55,6 @@ const mapDispatchToProps = {
   getAllPosts: getAllPosts,
   getCategories: getCategories,
   sortBy: sortBy,
-  votePost: votePost,
 }
 
 const mapStateToProps = state => { 
@@ -108,7 +65,7 @@ const mapStateToProps = state => {
     return a[sortBy] < b[sortBy]; }); 
   return { 
     sortedPosts: [...sortedPosts], 
-    categories: state.categories_reducer.categories, 
+    categories: state.categories_reducer.categories,
   }
 }
 

@@ -27,7 +27,7 @@ class CategoryPost extends Component {
                 </div>
 
                 <Link 
-                  to={`/post/${post.id}`}>
+                  to={`/${this.props.category}/${post.id}`}>
                   Details
                 </Link>
               </div>

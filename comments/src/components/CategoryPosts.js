@@ -22,7 +22,7 @@ class CategoryPosts extends Component {
     const category_posts = this.props.category_posts
     return (
       <div>
-        <CategoryPost posts={category_posts} />
+        <CategoryPost posts={category_posts} category={this.props.category} />
       </div>
     )
   }

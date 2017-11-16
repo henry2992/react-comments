@@ -9,6 +9,7 @@ import NewPost from './NewPost'
 import Posts from './Posts'
 import PostView from './PostView'
 import CategoryPosts from './CategoryPosts'
+import CategoryPost from './CategoryPost'
 import EditPost from './EditPost'
 import { Route, Link, withRouter, Switch } from 'react-router-dom'
 
@@ -19,7 +20,6 @@ class App extends Component {
   }
 
   render() {
-    const posts = this.props.posts;
     const categories = this.props.categories;
 
     return (
@@ -36,7 +36,9 @@ class App extends Component {
               <Route path='/post/new' component={NewPost} />
               <Route exact path='/post/:postId/edit' component={EditPost} />
               <Route path='/category/:category' component={CategoryPosts} />
+              <Route path='/:category/:postId' component={PostView} />
               <Route exact path='/post/:postId' component={PostView} />
+
 
             </Switch>
           </div>
@@ -53,7 +55,6 @@ const mapDispatchToProps = {
 const mapStateToProps = state => {
   return {
     categories: state.categories_reducer.categories,
-    post: state.posts_reducer.post,
   }
 }
 

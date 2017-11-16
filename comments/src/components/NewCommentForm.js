@@ -39,9 +39,7 @@ class NewCommentForm extends Component {
     } else {
       this.setState({ showModal: false });
     }
-
     let comment = nextProps.comment;
-
     if ( comment !== undefined) {
       this.setState({ 
         id: comment.id,

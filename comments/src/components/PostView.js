@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import Comments from './Comments'
 import NewCommentForm from './NewCommentForm'
 import { Button } from 'react-bootstrap'
+import * as API from './../utils/Api'
 
 class PostView extends Component {
 
@@ -13,6 +14,7 @@ class PostView extends Component {
     super(props);
     this.state = {
       showModal: false,
+      comments: 0
     };
   }
 
@@ -20,6 +22,9 @@ class PostView extends Component {
     const postId = this.props.match.params.postId
     this.props.getSinglePost(postId);
     this.props.getComments(postId)
+    let comments = API.getComments(postId).then( 
+      comments => this.setState({ comments: comments.length })
+    )
   }
 
   open() {
@@ -44,7 +49,10 @@ class PostView extends Component {
     let post_component = '';
 
     if(post !== undefined) {
-      post_component = 
+      if (Object.getOwnPropertyNames(post).length === 0) {
+        post_component = '404 Not found'
+      } else {
+        post_component = 
         <div>
           <div className="row" key={post.id}>
             <div className="col-md-12">
@@ -59,6 +67,7 @@ class PostView extends Component {
                 <div className="author-holder">
                   <p>Author: {post.author}</p>
                   <p>Category: {post.category}</p>
+                  <p>Number of Comments: {this.state.comments}</p>
                 </div>
                 <button
                   className='btn btn-success'
@@ -82,6 +91,7 @@ class PostView extends Component {
           </div>
           <NewCommentForm comment={undefined} close={this.close.bind(this)} showModal={this.state.showModal} postId={post.id} />
         </div>
+      }
     } else {
       post_component = 'Loading'
     }
